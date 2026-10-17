@@ -12,7 +12,10 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
+import org.gradle.work.DisableCachingByDefault
 import java.io.BufferedOutputStream
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
@@ -30,13 +33,18 @@ import java.util.jar.JarOutputStream
  *
  * @suppress
  */
+@DisableCachingByDefault(
+    because = "The transform may use a random seed when none is configured, so its output is not reproducible.",
+)
 public abstract class StringVeilTransformClassesTask : DefaultTask() {
     @get:InputFiles
     @get:Optional
+    @get:PathSensitive(PathSensitivity.RELATIVE)
     public abstract val inputJars: ListProperty<RegularFile>
 
     @get:InputFiles
     @get:Optional
+    @get:PathSensitive(PathSensitivity.RELATIVE)
     public abstract val inputDirectories: ListProperty<Directory>
 
     @get:OutputFile
