@@ -12,6 +12,7 @@ import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
+import org.gradle.work.DisableCachingByDefault
 
 /**
  * JVM path: rewrites `@Obfuscate` / `obfuscate(...)` literals in the main source set's compiled
@@ -22,6 +23,9 @@ import org.gradle.api.tasks.TaskAction
  * once a class is transformed there are no matching literals left for a second pass, so the
  * transformer reports no change and the file is not rewritten.
  */
+@DisableCachingByDefault(
+    because = "The task rewrites compiled class files in place and cannot restore those inputs from the build cache.",
+)
 public abstract class StringVeilTransformJvmClassesTask : DefaultTask() {
     @get:InputFiles
     @get:PathSensitive(PathSensitivity.RELATIVE)
