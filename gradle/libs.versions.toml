@@ -3,7 +3,7 @@ kotlin = "2.4.21"
 nmcp = "1.6.2"
 plugin-publish = "2.2.1"
 dokka = "2.2.0"
-asm = "9.10.1"
+asm = "9.11.1"
 agp = "8.7.3"
 
 [plugins]
